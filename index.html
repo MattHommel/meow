@@ -3,32 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meow</title>
+    <title>Afficher EUR/USD</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
         }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+        #prix {
+            font-size: 24px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <h1>Bienvenue sur ma page web</h1>
-    <p>Appuyez sur le bouton pour afficher un message avec JavaScript :</p>
-
-    <button onclick="afficherMessage()">Cliquez-moi !</button>
+    <h1>Le prix actuel de l'EUR/USD</h1>
+    <p id="prix">Chargement...</p>
 
     <script>
-        // Fonction JavaScript pour afficher une alerte
-        function afficherMessage() {
-            alert("Bonjour ! Vous avez cliqué sur le bouton.");
+        // Remplacez 'votre-clé-api' par la clé que vous avez obtenue sur ExchangeRate-API
+        const apiKey = "9b7617c1da0ddad5827c31eb";
+        const url = `https://v6.exchangerate-api.com/v6/${apiKey}/latest/EUR`;
+
+        // Fonction pour récupérer le taux de change EUR/USD
+        async function obtenirTauxDeChange() {
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+
+                // Vérifier si la réponse contient des données valides
+                if (data.result === "success") {
+                    const tauxUSD = data.conversion_rates.USD;
+                    document.getElementById("prix").textContent = `1 EUR = ${tauxUSD} USD`;
+                } else {
+                    document.getElementById("prix").textContent = "Erreur de récupération des données.";
+                }
+            } catch (error) {
+                document.getElementById("prix").textContent = "Erreur de connexion à l'API.";
+            }
         }
+
+        // Appel de la fonction pour afficher le taux de change
+        obtenirTauxDeChange();
     </script>
 
 </body>
