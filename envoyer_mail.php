@@ -5,7 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $message = $_POST['message'];
 
     // Adresse e-mail du destinataire
-    $destinataire = "votre-email@example.com"; // Remplacez par votre e-mail
+    $destinataire = "matt.hommel11@gmail.com"; // Remplacez par votre e-mail
 
     // Sujet du mail
     $sujet = "Nouveau message de " . $nom;
