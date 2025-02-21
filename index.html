@@ -22,18 +22,18 @@
     <p id="prix">Chargement...</p>
 
     <script>
-        // L'URL de l'API Exchangeratesapi.io sans clé API
-        const url = 'https://api.exchangerate-api.com/v4/latest/EUR';
+        // L'URL de Yahoo Finance pour obtenir le taux EUR/USD
+        const url = 'https://query1.finance.yahoo.com/v7/finance/quote?symbols=EURUSD=X';
 
-        // Fonction pour récupérer le taux de change EUR/USD
+        // Fonction pour récupérer le taux de change de l'API Yahoo Finance
         async function obtenirTauxDeChange() {
             try {
                 const response = await fetch(url);
                 const data = await response.json();
 
                 // Vérifier si la réponse contient des données valides
-                if (data.rates && data.rates.USD) {
-                    const tauxUSD = data.rates.USD;
+                if (data.quoteResponse.result.length > 0) {
+                    const tauxUSD = data.quoteResponse.result[0].regularMarketPrice;
                     document.getElementById("prix").textContent = `1 EUR = ${tauxUSD} USD`;
                 } else {
                     document.getElementById("prix").textContent = "Erreur de récupération des données.";
