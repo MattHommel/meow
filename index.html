@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de contact</title>
+    <title>Page avec JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h1>Contactez-nous</h1>
-    <form action="envoyer_mail.php" method="POST">
-        <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" required><br><br>
 
-        <label for="email">E-mail :</label>
-        <input type="email" id="email" name="email" required><br><br>
+    <h1>Bienvenue sur ma page web</h1>
+    <p>Appuyez sur le bouton pour afficher un message avec JavaScript :</p>
 
-        <label for="message">Message :</label><br>
-        <textarea id="message" name="message" rows="4" required></textarea><br><br>
+    <button onclick="afficherMessage()">Cliquez-moi !</button>
 
-        <input type="submit" value="Envoyer">
-    </form>
+    <script>
+        // Fonction JavaScript pour afficher une alerte
+        function afficherMessage() {
+            alert("Bonjour ! Vous avez cliqué sur le bouton.");
+        }
+    </script>
+
 </body>
 </html>
