@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afficher EUR/USD en direct</title>
+    <title>Prix EUR/USD en temps réel</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,8 +22,8 @@
     <p id="prix">Chargement...</p>
 
     <script>
-        // URL de l'API Yahoo Finance
-        const url = "https://query1.finance.yahoo.com/v7/finance/quote?symbols=EURUSD=X";
+        // L'URL de l'API Exchangeratesapi.io sans clé API
+        const url = 'https://api.exchangerate-api.com/v4/latest/EUR';
 
         // Fonction pour récupérer le taux de change EUR/USD
         async function obtenirTauxDeChange() {
@@ -32,8 +32,8 @@
                 const data = await response.json();
 
                 // Vérifier si la réponse contient des données valides
-                if (data.quoteResponse.result.length > 0) {
-                    const tauxUSD = data.quoteResponse.result[0].regularMarketPrice;
+                if (data.rates && data.rates.USD) {
+                    const tauxUSD = data.rates.USD;
                     document.getElementById("prix").textContent = `1 EUR = ${tauxUSD} USD`;
                 } else {
                     document.getElementById("prix").textContent = "Erreur de récupération des données.";
