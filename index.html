@@ -3,23 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exécuter Python sur GitHub Pages</title>
+    <title>Prix EUR/USD en Direct</title>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython.min.js"></script>
 </head>
 <body onload="brython()">
 
-    <h1>Exécution de Python en HTML</h1>
-    <button id="runPython">Exécuter Python</button>
-    <p id="output">Résultat : </p>
+    <h1>Prix EUR/USD en Direct</h1>
+    <button id="getPrice">Obtenir le prix</button>
+    <p id="price">Prix : En attente...</p>
 
     <script type="text/python">
-        from browser import document
+        from browser import document, ajax
 
-        def execute_python(event):
-            result = 2 + 2  # Code Python à exécuter
-            document["output"].text = f"Résultat : {result}"
+        def get_price(event):
+            url = "https://query1.finance.yahoo.com/v8/finance/chart/EURUSD=X"
+            
+            def on_complete(req):
+                if req.status == 200:
+                    data = req.json()
+                    try:
+                        price = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
+                        document["price"].text = f"Prix : {price} USD"
+                    except:
+                        document["price"].text = "Erreur : Impossible de récupérer le prix."
+                else:
+                    document["price"].text = "Erreur : Problème avec Yahoo Finance."
 
-        document["runPython"].bind("click", execute_python)
+            req = ajax.ajax()
+            req.bind("complete", on_complete)
+            req.open("GET", url, True)
+            req.send()
+
+        document["getPrice"].bind("click", get_price)
     </script>
 
 </body>
