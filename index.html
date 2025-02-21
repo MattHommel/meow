@@ -3,48 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prix EUR/USD en temps réel</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        #prix {
-            font-size: 24px;
-            font-weight: bold;
-        }
-    </style>
+    <title>Exécuter Python sur GitHub Pages</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython.min.js"></script>
 </head>
-<body>
+<body onload="brython()">
 
-    <h1>Le prix actuel de l'EUR/USD</h1>
-    <p id="prix">Chargement...</p>
+    <h1>Exécution de Python en HTML</h1>
+    <button id="runPython">Exécuter Python</button>
+    <p id="output">Résultat : </p>
 
-    <script>
-        // L'URL de Yahoo Finance pour obtenir le taux EUR/USD
-        const url = 'https://query1.finance.yahoo.com/v7/finance/quote?symbols=EURUSD=X';
+    <script type="text/python">
+        from browser import document
 
-        // Fonction pour récupérer le taux de change de l'API Yahoo Finance
-        async function obtenirTauxDeChange() {
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
+        def execute_python(event):
+            result = 2 + 2  # Code Python à exécuter
+            document["output"].text = f"Résultat : {result}"
 
-                // Vérifier si la réponse contient des données valides
-                if (data.quoteResponse.result.length > 0) {
-                    const tauxUSD = data.quoteResponse.result[0].regularMarketPrice;
-                    document.getElementById("prix").textContent = `1 EUR = ${tauxUSD} USD`;
-                } else {
-                    document.getElementById("prix").textContent = "Erreur de récupération des données.";
-                }
-            } catch (error) {
-                document.getElementById("prix").textContent = "Erreur de connexion à l'API.";
-            }
-        }
-
-        // Appel de la fonction pour afficher le taux de change
-        obtenirTauxDeChange();
+        document["runPython"].bind("click", execute_python)
     </script>
 
 </body>
